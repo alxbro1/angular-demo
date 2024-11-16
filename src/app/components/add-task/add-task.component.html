@@ -1,1 +1,5 @@
-<h1>Hi this is my first component in Angular</h1>
+<h1>Add your task here</h1>
+<form [formGroup]="taskForm" (ngSubmit)="onSubmit()">
+    <input type="text" name="task" id="task" placeholder="Task" formControlName="task">
+    <button type="submit">add task</button>
+</form>

@@ -1,4 +1,3 @@
-// app.component.ts
 import { Component } from '@angular/core';
 
 @Component({
@@ -8,4 +7,9 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'mi-app';
+  tasks: string[] = []
+
+  addTask(task:string){
+    this.tasks.push(task)
+  }
 }
