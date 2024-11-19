@@ -9,6 +9,8 @@ export class addTaskComponent {
   @Output() taskAdded = new EventEmitter<string>()
   
   taskForm: FormGroup;
+  inputValue: string = "";
+  isValid: boolean = true;
 
   constructor(private fb: FormBuilder) { 
     this.taskForm = this.fb.group({
@@ -20,5 +22,10 @@ export class addTaskComponent {
     const newTask: string = this.taskForm.value.task;
     this.taskAdded.emit(newTask);
     this.taskForm.reset()
+  }
+
+  onChangeValue(value:string){
+    this.inputValue = value
+    this.isValid = this.taskForm.valid
   }
 }
