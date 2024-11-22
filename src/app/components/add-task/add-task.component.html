@@ -1,6 +1,0 @@
-<h1>Add your task here</h1>
-<h2>Task Name: {{inputValue}}</h2>
-<form [formGroup]="taskForm" (ngSubmit)="onSubmit()">
-    <input type="text" name="task" id="task" placeholder="Task" (ngModelChange)="onChangeValue($event)" formControlName="task" >
-    <button type="submit" [disabled]="!taskForm.valid">add task</button>
-</form>
