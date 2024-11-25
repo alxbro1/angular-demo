@@ -1,4 +1,4 @@
 <h1>Tasks Manager</h1>
-<app-task-list/>
-<app-task-form/>
+<app-task-list [tasks]="tasks" (deleteEmmiter)="deleteTask($event)" (checkedEmiter)="checkTask($event)"/>
+<app-task-form (taskEmiter)="addTask($event)"/>
 <router-outlet/>

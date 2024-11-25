@@ -1,53 +1,29 @@
-import { Component } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { Task } from '../model/task.model';
+import { CommonModule } from '@angular/common';
+import { TaskCompletedDirective } from '../task-completed.directive';
 
 @Component({
   selector: 'app-task-list',
   standalone: true,
-  imports: [],
+  imports: [CommonModule, TaskCompletedDirective],
   templateUrl: './task-list.component.html',
   styleUrl: './task-list.component.scss',
 })
 export class TaskListComponent {
-  tasks: Task[] = [
-    {
-      id: Math.floor(Math.random() * 1000),
-      title: 'comer',
-      completed: false,
-    },
-    {
-      id: Math.floor(Math.random() * 1000),
-      title: 'Dormir',
-      completed: false,
-    },
-    {
-      id: Math.floor(Math.random() * 1000),
-      title: 'Cenar',
-      completed: false,
-    },
-    {
-      id: Math.floor(Math.random() * 1000),
-      title: 'dawda',
-      completed: false,
-    },
-    {
-      id: Math.floor(Math.random() * 1000),
-      title: 'trabajar',
-      completed: false,
-    },
-    {
-      id: Math.floor(Math.random() * 1000),
-      title: 'estudiar',
-      completed: false,
-    },
-    {
-      id: Math.floor(Math.random() * 1000),
-      title: 'boludear',
-      completed: false,
-    },
-  ];
+  @Input() tasks: Task[] = []
+  @Output() deleteEmmiter = new EventEmitter<number>()
+  @Output() checkedEmiter = new EventEmitter<number>()
 
-  deleteTask(id:number){
-    this.tasks = this.tasks.filter((task: Task) => task.id !== id);
+  deleteTask(id: number) {
+    this.deleteEmmiter.emit(id)
+  }
+
+  trackByTaskId(index: number, task: Task): number {
+    return task.id
+  }
+
+  checkedTask(id:number){
+    this.checkedEmiter.emit(id)
   }
 }
