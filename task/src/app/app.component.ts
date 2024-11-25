@@ -1,8 +1,9 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { TaskListComponent } from './task-list/task-list.component';
 import { TaskFormComponent } from './task-form/task-form.component';
 import { Task } from './model/task.model';
+import { TaskService } from './task.service';
 
 @Component({
   selector: 'app-root',
@@ -10,25 +11,31 @@ import { Task } from './model/task.model';
   imports: [RouterOutlet, TaskListComponent, TaskFormComponent],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss',
+  providers: [TaskService],
 })
-export class AppComponent {
+export class AppComponent implements OnInit {
+  constructor(private taskService: TaskService) {}
+
   tasks!: Task[];
 
+  ngOnInit(): void {
+    this.tasks = this.taskService.getTasks();
+  }
+
   addTask(task: string) {
-    if (!this.tasks) this.tasks = [];
-    this.tasks.push({
+    const taskObj = {
       id: Math.floor(Math.random() * 1000),
       title: task,
       completed: false,
-    });
+    };
+    this.tasks = this.taskService.addTasks(taskObj);
   }
 
   deleteTask(id: number) {
-    this.tasks = this.tasks.filter((task: Task) => task.id !== id);
+    this.tasks = this.taskService.deleteTasks(id)
   }
 
   checkTask(id: number) {
-    const index = this.tasks.findIndex((task) => task.id === id);
-    this.tasks[index].completed = !this.tasks[index].completed;
+    this.tasks = this.taskService.checkTask(id)
   }
 }
